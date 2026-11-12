@@ -1,0 +1,30 @@
+{
+  "name": "tufte-site",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "node metalsmith.js",
+    "serve": "npx --yes http-server build -p 8080",
+    "dev": "node scripts/dev.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "module",
+  "dependencies": {
+    "@metalsmith/collections": "^2.0.0",
+    "@metalsmith/layouts": "^3.0.0",
+    "@metalsmith/markdown": "^1.10.0",
+    "@metalsmith/permalinks": "^3.2.0",
+    "handlebars": "^4.7.10",
+    "jstransformer-handlebars": "^1.2.0",
+    "metalsmith": "^2.7.0",
+    "tufte-css": "^1.9.0"
+  },
+  "devDependencies": {
+    "browser-sync": "^3.0.4",
+    "eslint": "^10.14.0"
+  }
+}

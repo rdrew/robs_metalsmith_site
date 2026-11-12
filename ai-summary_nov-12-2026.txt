@@ -1,0 +1,42 @@
+PROJECT: Tufte CSS static site (Metalsmith)
+
+Goal: a simple static site based on Edward Tufte's tufte-css, built with
+Metalsmith. Inspired by Laurenfrost/tufte-like-astro-blog but simpler,
+with no Tailwind and no client-side JS. I usually use BrowserSync and am
+familiar with it.
+
+What was built (delivered as tufte-site.zip):
+- Node project (ESM, npm). Dependencies: metalsmith, @metalsmith/markdown,
+  @metalsmith/collections, @metalsmith/permalinks, @metalsmith/layouts,
+  jstransformer-handlebars, handlebars, tufte-css.
+  Dev dependency: browser-sync.
+- Scripts: npm run build (outputs to build/), npm run dev (BrowserSync on
+  localhost:3000, rebuilds + reloads on changes to src/, layouts/, lib/,
+  metalsmith.js), npm run serve (static preview of build/ via http-server).
+
+Structure:
+- metalsmith.js: pipeline + site metadata (title, description, author,
+  base path for subfolder hosting). Pipeline order: date formatting ->
+  collections (posts/*.md sorted by date, newest first) -> tufteNotes
+  plugin -> markdown (html + typographer on) -> permalinks -> urls plugin
+  (sets clean file.url like /posts/slug/) -> layouts (Handlebars).
+  After build, tufte.min.css is copied to build/css/tufte.css and the
+  et-book fonts to build/css/et-book (done after build because clean()
+  wipes the folder first).
+- lib/tufte-notes.js: preprocess plugin so Markdown can use
+  {{sn: text}} for numbered sidenotes and {{mn: text}} for margin notes.
+  Skips fenced code blocks and inline code. Raw HTML (figure, fullwidth
+  div) passes through.
+- layouts/page.hbs (default) and layouts/posts.hbs (post list page).
+  Nav: site title, Posts, About.
+- src/: index.md, about.md, posts.md (listing page, layout posts.hbs),
+  posts/hello-tufte.md (demo post), css/site.css (about 10 lines of nav
+  and list styling).
+- README.md and .gitignore (node_modules, build).
+
+Verified: builds cleanly, sidenote markup and post list URLs correct,
+dev server rebuilds on edit. Not yet viewed in a browser by me, only the
+generated HTML was checked.
+
+Not included (possible additions): RSS (@metalsmith/feed), tags,
+pagination, Dockerfile, deploy config.
