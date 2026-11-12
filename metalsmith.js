@@ -3,12 +3,21 @@ import markdown from "@metalsmith/markdown";
 import collections from "@metalsmith/collections";
 import permalinks from "@metalsmith/permalinks";
 import layouts from "@metalsmith/layouts";
-import { cpSync } from "node:fs";
+import { cpSync, readdirSync, readFileSync } from "node:fs";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import tufteNotes from "./lib/tufte-notes.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const partials = Object.fromEntries(
+  readdirSync(join(__dirname, "partials"))
+    .filter((f) => f.endsWith(".hbs"))
+    .map((f) => [
+      f.replace(/\.hbs$/, ""),
+      readFileSync(join(__dirname, "partials", f), "utf8"),
+    ]),
+);
 
 const site = {
   title: "Robert Neil Drew",
@@ -67,6 +76,7 @@ const ms = Metalsmith(__dirname)
       transform: "handlebars",
       pattern: "**/*.html",
       default: "page.hbs",
+      engineOptions: { partials },
     }),
   );
 

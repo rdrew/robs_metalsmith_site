@@ -1,28 +1,20 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>{{#if title}}{{title}} · {{/if}}{{site.title}}</title>
-  <meta name="description" content="{{#if description}}{{description}}{{else}}{{site.description}}{{/if}}">
-  <link rel="preload" href="{{site.base}}/css/et-book/et-book-roman-line-figures/et-book-roman-line-figures.woff" as="font" type="font/woff" crossorigin>
-  <link rel="preload" href="{{site.base}}/css/et-book/et-book-display-italic-old-style-figures/et-book-display-italic-old-style-figures.woff" as="font" type="font/woff" crossorigin>
-  <link rel="stylesheet" href="{{site.base}}/css/tufte.css">
-  <link rel="stylesheet" href="{{site.base}}/css/site.css">
+  {{> head}}
 </head>
 <body>
   <article>
     <nav class="site-nav">
-      <a href="{{site.base}}/">{{site.title}}</a>
-      <a href="{{site.base}}/forgive-me-nots/">The Forgive-me-nots</a>
-      <a href="{{site.base}}/posts/">Posts/Events</a>
-      <a href="{{site.base}}/about/">About</a>
+      {{> topnav}}
     </nav>
     {{#if title}}
     <h1>{{title}}</h1>
     {{#if subtitle}}<p class="subtitle">{{subtitle}}</p>{{else if dateLabel}}<p class="subtitle">{{dateLabel}}</p>{{/if}}
     {{/if}}
+    <section>
     {{{contents}}}
+    </section>
     <section>
       <p class="site-footer">&copy; {{site.author}}. Set in <a href="https://github.com/edwardtufte/tufte-css">Tufte CSS</a>.</p>
     </section>
